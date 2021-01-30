@@ -122,8 +122,26 @@ abstract class ApplicationFramework {
 
     abstract void customize1();
 
-    abstract void customize2(); // "private" means automatically "final": private void templateMethod() { IntStream.range(0, 5).forEach( n -> { customize1(); customize2(); }); }}// Create a new "application": class MyApp extends ApplicationFramework { @Override void customize1() { System.out.print("Hello "); }@Override
+    abstract void customize2();
 
+    // "private" means automatically "final":
+    private void templateMethod() {
+        IntStream.range(0, 5).forEach(
+                n -> {
+                    customize1();
+                    customize2();
+                });
+    }
+}
+
+// Create a new "application":
+class MyApp extends ApplicationFramework {
+    @Override
+    void customize1() {
+        System.out.print("Hello ");
+    }
+
+    @Override
     void customize2() {
         System.out.println("World!");
     }
@@ -134,8 +152,7 @@ public class TemplateMethod {
         new MyApp();
     }
 }
-/*
-Output:
+/* Output:
 Hello World!
 Hello World!
 Hello World!
@@ -245,8 +262,20 @@ class State implements StateBase {
     @Override
     public void changeImp(StateBase newImp) {
         implementation = newImp;
-    }// Pass method calls to the implementation: @Override public void f() { implementation.f(); } @Override public void g() { implementation.g(); } @Override
+    }
 
+    // Pass method calls to the implementation:
+    @Override
+    public void f() {
+        implementation.f();
+    }
+
+    @Override
+    public void g() {
+        implementation.g();
+    }
+
+    @Override
     public void h() {
         implementation.h();
     }
@@ -302,7 +331,8 @@ public class StateDemo {
     }
 
     public static void main(String[] args) {
-        StateBase b = new State(new Implementation1());
+        StateBase b =
+                new State(new Implementation1());
         test(b);
         b.changeImp(new Implementation2());
         test(b);
@@ -349,9 +379,6 @@ interface State {
 abstract class StateMachine {
     protected State currentState;
 
-    Nap(0.5);
-System.out.println("Washing"); new
-
     protected abstract boolean changeState();
 
     // Template method:
@@ -362,9 +389,12 @@ System.out.println("Washing"); new
 }
 
 // A different subclass for each state:
+
 class Wash implements State {
     @Override
     public void run() {
+        System.out.println("Washing");
+        new Nap(0.5);
     }
 }
 
@@ -386,9 +416,11 @@ class Rinse implements State {
 
 class Washer extends StateMachine {
     private int i = 0;
-
     // The state table:
-    private State[] states = {new Wash(), new Spin(), new Rinse(), new Spin(),};
+    private State[] states = {
+            new Wash(), new Spin(),
+            new Rinse(), new Spin(),
+    };
 
     Washer() {
         runAll();
@@ -401,7 +433,8 @@ class Washer extends StateMachine {
             // surrogate reference to a new object:
             currentState = states[i++];
             return true;
-        } else return false;
+        } else
+            return false;
     }
 }
 
@@ -410,8 +443,7 @@ public class StateMachineDemo {
         new Washer();
     }
 }
-/*
-Output:
+/* Output:
 Washing
 Spinning
 Rinsing
@@ -1184,9 +1216,15 @@ public class Facade {
 
 <!-- Interpreter: Run-Time Flexibility -->
 ## 解释器：运行时的弹性
+<<<<<<< HEAD
 
 如果程序的用户需要更好的运行时弹性，例如创建脚本来增加需要的系统功能，你就能使用解释器设计模式。这个模式下，你可以创建一个语言解释器并将它嵌入你的程序内。
 
+=======
+
+如果程序的用户需要更好的运行时弹性，例如创建脚本来增加需要的系统功能，你就能使用解释器设计模式。这个模式下，你可以创建一个语言解释器并将它嵌入你的程序内。
+
+>>>>>>> 4cef49d2a28ae6c5a1b64ccfb969c47d8be28495
 在开发程序的过程中，设计自己的语言并为它构建一个解释器是一件让人分心且耗时的事。最好的解决方案就是复用代码：使用一个已经构建好并被调试过的解释器。Python 语言可以免费地嵌入营利性的应用中而不需要任何的协议许可、授权费或者是任何的声明。此外，有一个完全使用 Java 字节码实现的 Python 版本（叫做 Jython）， 能够轻易地合并到 Java 程序中。Python 是一门非常易学习的脚本语言，代码的读写很有逻辑性。它支持函数与对象，有大量的可用库，并且可运行在所有的平台上。你可以在 [www.Python.org](https://www.python.org/) 上下载 Python 并了解更多信息。
 
 <!-- Callbacks -->
